@@ -25,7 +25,7 @@ for DIR in $(find . -type d | egrep -v "/\."); do
 			${LS} -a | grep "\.\./$" | awk  "${AWKEXPR}"
 		fi
 
-		${LS} | egrep -v "^(index\.html|/\.)$" | awk '{if(NR>1)print}' | awk "${AWKEXPR}"
+		${LS} | grep -v "index\.html" | awk '{if(NR>1)print}' | awk "${AWKEXPR}"
 
 		echo "		</tbody></table>"
 		echo "	</body>"
