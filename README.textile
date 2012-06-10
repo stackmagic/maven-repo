@@ -1,0 +1,12 @@
+
+h1. stackmagic's maven repo
+
+not much to see here, check out the "actual repo":http://stackmagic.github.com/maven-repo/
+
+or add the repository to your pom:
+
+bc..  <repository>
+    <id>stackmagic.github.maven-repo</id>
+    <url>http://stackmagic.github.com/maven-repo/</url>
+</repository> 
+
