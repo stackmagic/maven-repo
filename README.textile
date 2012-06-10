@@ -1,7 +1,7 @@
 
 h1. stackmagic's maven repo
 
-p. not much to see here on the master branch, check out the gh-pages branch or the "actual publish maven repo":http://stackmagic.github.com/maven-repo/ or add the repository to your pom
+p. not much to see here on the master branch, check out the gh-pages branch or the "actual published maven repo":http://stackmagic.github.com/maven-repo/ or add the repository to your pom
 
 bc..  <repository>
     <id>stackmagic.github.maven-repo</id>
