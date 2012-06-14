@@ -3,11 +3,12 @@
   <groupId>net.swisstech.bitly</groupId>
   <artifactId>bitly-api-client</artifactId>
   <versioning>
-    <release>0.0.5</release>
+    <release>0.0.6</release>
     <versions>
       <version>0.0.4</version>
       <version>0.0.5</version>
+      <version>0.0.6</version>
     </versions>
-    <lastUpdated>20120610151609</lastUpdated>
+    <lastUpdated>20120614140854</lastUpdated>
   </versioning>
 </metadata>
