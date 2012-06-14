@@ -1,4 +1,6 @@
 #!/bin/bash
+
+LANG=en
  
 for DIR in $(find . -type d | egrep -v "/\."); do
 	echo "Updating ${DIR}"
@@ -8,9 +10,9 @@ for DIR in $(find . -type d | egrep -v "/\."); do
 		echo "	<head><title>Index of ${DIR}</title>"
 		echo "	<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />"
 		echo "	<style type=\"text/css\">"
-		echo "		table, thead, tbody, tr, td { font-family: monospace; white-space: pre; }"
+		echo "		table, thead, tbody, tr, td, div.footer { font-family: monospace; white-space: pre; }"
 		echo "		thead { font-weight: bold; }"
-		echo "		td.size { text-align: right; }"
+		echo "		td.size, div.footer { text-align: right; }"
 		echo "	</style>"
 		echo "	</head><body>"
 		echo "		<h1>Index of ${DIR}</h1>"
@@ -28,6 +30,8 @@ for DIR in $(find . -type d | egrep -v "/\."); do
 		${LS} | grep -v "index\.html" | awk '{if(NR>1)print}' | awk "${AWKEXPR}"
 
 		echo "		</tbody></table>"
+		echo "		<hr/>"
+		echo "		<div class=\"footer\">Last Updated: $(date)</div>"
 		echo "	</body>"
 		echo "</html>"
 	) > "${DIR}/index.html"
