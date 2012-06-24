@@ -174,14 +174,14 @@ Ideas for more:
 					user = loc.split("#")[1]
 				}
 
-				while (body.getElementsByTagName("script").length > 0) {
-					body.removeChild(body.getElementsByTagName("script")[0])
+				while (document.body.getElementsByTagName("script").length > 0) {
+					document.body.removeChild(document.body.getElementsByTagName("script")[0])
 				}
 
 				script = document.createElement("script")
 				script.setAttribute("type", "text/javascript")
 				script.setAttribute("src", "http://travis-ci.org/repositories.json?owner_name=" + user + "&amp;callback=parseResponse")
-				body.appendChild(script)
+				document.body.appendChild(script)
 			}
 
 			function init() {
