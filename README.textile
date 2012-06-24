@@ -8,4 +8,11 @@ bc..  <repository>
     <url>http://stackmagic.github.com/maven-repo/</url>
 </repository> 
 
-p. cheers!
+h1. stackmagic's travic-ci dashboard
+
+p. you may have come here by way of my "travis-ci dashboard":http://stackmagic.github.com/maven-repo/travis-ci-dashboard.html
+
+p. you can use this dashboard for yourself as it is right now, just append "#myusername" to the url and you have your very own dashboard instantly!! so the url for twitter's projects on travis-ci would be "http://stackmagic.github.com/maven-repo/travis-ci-dashboard.html#twitter":http://stackmagic.github.com/maven-repo/travis-ci-dashboard.html#twitter
+
+p. enjoy!
+
