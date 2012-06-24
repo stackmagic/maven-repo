@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Copyright (c) Patrick Huber / stackmagic@gmail.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!--
+Ideas for more:
+* show an extra line at the bottom of the panel with a history of past builds, just the number and an icon or red/green color => http://travis-ci.org/:owner_name/:name/builds.json
+* read the username from the url (param or maybe domain name)
+* display in progress builds with a spinner icon and grey background for the panel
+* order panels: failed on top, the build in progress then ok -- each group sorted by newest on top
+* make it completely self-contained, load once, let it run forever
+* back/fwd buttons to navigate between builds, button to reset - kinda duplicates the past builds history
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>Travis Dashboard</title>
+		<style>
+			body {
+				font-family: helvetica;
+				font-weight: bold;
+				font-size: 2em;
+				background-color: #000000;
+			}
+			a, a:visited, a:active {
+				color: #FFFFFF;
+				text-decoration: none;
+			}
+			#result > div {
+				width: 99%;
+				display: inline-block;
+				border: 1px solid #FFFFFF;
+				padding: 5px;
+				color: #FFFFFF;
+				margin-bottom: 0.5%;
+			}
+			#result > div.ok {
+				background-color: #00AA00;
+			}
+			#result > div.fail {
+				background-color: #AA0000;
+			}
+			#result > div > div {
+				white-space: nowrap;
+				overflow: hidden;
+				display: inline-block;
+				padding: 0;
+			}
+			#result > div > div:nth-child(odd) {
+				width: 64%;
+				text-align: left;
+			}
+			#result > div > div:nth-child(even) {
+				width: 35%;
+				text-align: right;
+			}
+		</style>
+		<script type="text/javascript">
+			// blatantly stolen from http://ejohn.org/files/pretty.js
+			function prettyDate(time){
+				var date = new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
+					diff = (((new Date()).getTime() - date.getTime()) / 1000),
+					day_diff = Math.floor(diff / 86400);
+
+				if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
+					return;
+
+				return day_diff == 0 && (
+						diff < 60 && "just now" ||
+						diff < 120 && "1 minute ago" ||
+						diff < 3600 && Math.floor( diff / 60 ) + " minutes ago" ||
+						diff < 7200 && "1 hour ago" ||
+						diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
+					day_diff == 1 && "Yesterday" ||
+					day_diff < 7 && day_diff + " days ago" ||
+					day_diff < 31 && Math.ceil( day_diff / 7 ) + " weeks ago";
+			}
+
+			// read the response and update the dashboard
+			function parseResponse(json) {
+				if (json.length < 1) {
+					alert("Response contains no data, maybe that user does not exist?")
+					return
+				}
+
+				result = document.getElementById("result")
+				while (result.childNodes.length > 0) {
+					result.removeChild(result.firstChild)
+				}
+				
+
+				// add failed builds first
+				for (i = 0; i < json.length; i++) {
+					if (json[i].last_build_result != 0) {
+						result.appendChild(buildPanel(json[i]))
+					}
+				}
+
+				// add successfull builds below
+				for (i = 0; i < json.length; i++) {
+					if (json[i].last_build_result == 0) {
+						result.appendChild(buildPanel(json[i]))
+					}
+				}
+			}
+
+			function buildPanel(json) {
+				panel = document.createElement("div")
+				if (json.last_build_result) {
+					panel.setAttribute("class", "fail")
+				}
+				else {
+					panel.setAttribute("class", "ok")
+				}
+	
+				repoName = document.createElement("div")
+				repoNameLink = document.createElement("a")
+				repoNameLink.setAttribute("href", "http://travis-ci.org/" + json.slug)
+				repoNameLink.appendChild(document.createTextNode(json.slug))
+				repoName.appendChild(repoNameLink)
+				panel.appendChild(repoName)
+	
+				buildId = document.createElement("div")
+				buildIdLink = document.createElement("a")
+				buildIdLink.setAttribute("href", "http://travis-ci.org/" + json.slug + "/builds/" + json.last_build_id)
+				buildIdLink.appendChild(document.createTextNode("#" + json.last_build_number))
+				buildId.appendChild(buildIdLink)
+				panel.appendChild(buildId)
+	
+				repoDesc = document.createElement("div")
+				repoDescLink = document.createElement("a")
+				repoDescLink.setAttribute("href", "https://github.com/" + json.slug)
+				repoDescLink.appendChild(document.createTextNode(json.description))
+				repoDesc.appendChild(repoDescLink)
+				panel.appendChild(repoDesc)
+	
+				buildDone = document.createElement("div")
+				buildDone.appendChild(document.createTextNode(prettyDate(json.last_build_finished_at)))
+				panel.appendChild(buildDone)
+	
+				return panel
+			}
+
+			// update the dashboard
+			function update() {
+				user = "stackmagic"
+
+				// try to get username from subdomain
+				loc = window.location.host
+				if (loc.split(".").length > 0 && loc.indexOf("localhost") < 0 && loc.indexOf("127.0.0") < 0) {
+					user = loc.split(".")[0]
+				}
+
+				// try to get username from anchor in url
+				loc = window.location.href
+				if (user == "stackmagic" && loc.indexOf("#") > 0) {
+					user = loc.split("#")[1]
+				}
+
+				while (body.getElementsByTagName("script").length > 0) {
+					body.removeChild(body.getElementsByTagName("script")[0])
+				}
+
+				script = document.createElement("script")
+				script.setAttribute("type", "text/javascript")
+				script.setAttribute("src", "http://travis-ci.org/repositories.json?owner_name=" + user + "&amp;callback=parseResponse")
+				body.appendChild(script)
+			}
+
+			function init() {
+				update()
+				setInterval(update, 30000)
+			}
+		</script>
+	</head>
+	<body id="body" onload="init()">
+		<div id="result">Loading...</div>
+	</body>
+</html>
