@@ -32,17 +32,23 @@ Ideas for more:
 				font-weight: bold;
 				font-size: 2em;
 				background-color: #000000;
+				color: #FFFFFF;
 			}
 			a, a:visited, a:active {
 				color: #FFFFFF;
 				text-decoration: none;
+			}
+			#credit {
+				font-size: 0.5em;
+				text-align: right;
+				margin-right: 0.5%;
+				margin-bottom: 0.5%;
 			}
 			#result > div {
 				width: 99%;
 				display: inline-block;
 				border: 1px solid #FFFFFF;
 				padding: 5px;
-				color: #FFFFFF;
 				margin-bottom: 0.5%;
 			}
 			#result > div.ok {
@@ -130,25 +136,25 @@ Ideas for more:
 				repoNameLink.appendChild(document.createTextNode(json.slug))
 				repoName.appendChild(repoNameLink)
 				panel.appendChild(repoName)
-	
+
 				buildId = document.createElement("div")
 				buildIdLink = document.createElement("a")
 				buildIdLink.setAttribute("href", "http://travis-ci.org/" + json.slug + "/builds/" + json.last_build_id)
 				buildIdLink.appendChild(document.createTextNode("#" + json.last_build_number))
 				buildId.appendChild(buildIdLink)
 				panel.appendChild(buildId)
-	
+
 				repoDesc = document.createElement("div")
 				repoDescLink = document.createElement("a")
 				repoDescLink.setAttribute("href", "https://github.com/" + json.slug)
 				repoDescLink.appendChild(document.createTextNode(json.description))
 				repoDesc.appendChild(repoDescLink)
 				panel.appendChild(repoDesc)
-	
+
 				buildDone = document.createElement("div")
 				buildDone.appendChild(document.createTextNode(prettyDate(json.last_build_finished_at)))
 				panel.appendChild(buildDone)
-	
+
 				return panel
 			}
 
@@ -185,6 +191,7 @@ Ideas for more:
 		</script>
 	</head>
 	<body id="body" onload="init()">
+		<div id="credit">travis-ci dashboard by <a href="http://github.com/stackmagic">stackmagic</a> | <a href="https://github.com/stackmagic/maven-repo#readme">README</a></div>
 		<div id="result">Loading...</div>
 	</body>
 </html>
