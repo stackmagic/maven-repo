@@ -171,7 +171,10 @@ Ideas for more:
 				// try to get username from anchor in url
 				loc = window.location.href
 				if (user == "stackmagic" && loc.indexOf("#") > 0) {
-					user = loc.split("#")[1]
+					newUser = loc.split("#")[1]
+					if (newUser.length > 0) {
+						user = newUser
+					}
 				}
 
 				while (document.body.getElementsByTagName("script").length > 0) {
@@ -190,7 +193,7 @@ Ideas for more:
 			}
 		</script>
 	</head>
-	<body id="body" onload="init()">
+	<body id="body" onload="init()" onhashchange="update()">
 		<div id="credit">travis-ci dashboard by <a href="http://github.com/stackmagic">stackmagic</a> | <a href="https://github.com/stackmagic/maven-repo#readme">README</a></div>
 		<div id="result">Loading...</div>
 	</body>
