@@ -23,6 +23,7 @@ Ideas for more:
 * make it completely self-contained, load once, let it run forever
 * back/fwd buttons to navigate between builds, button to reset - kinda duplicates the past builds history
 * use http://travis-ci.org/workers.json to check if one of my projects is currently pending a build
+* support a comma separated list of usernames as in #stackmagic,twitter and display a single list containing all projects of all users
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 	<head>
@@ -111,6 +112,8 @@ Ideas for more:
 						result.appendChild(buildPanel(json[i]))
 					}
 				}
+
+				document.getElementById("lastUpdated").lastUpdated = new Date()
 			}
 
 			function buildPanel(json) {
@@ -188,14 +191,21 @@ Ideas for more:
 				document.body.appendChild(script)
 			}
 
+			function lastUpdated() {
+				lu = document.getElementById("lastUpdated")
+				lu.innerText = humaneDate(lu.lastUpdated)
+			}
+
 			function init() {
 				update()
+				setInterval(lastUpdated, 1000)
 				setInterval(update, 30000)
 			}
 		</script>
 	</head>
 	<body id="body" onload="init()" onhashchange="update()">
 		<div id="credit">
+			<a href="javascript:update()">update now</a> (last updated: <span id="lastUpdated">never</span>) | 
 			<a href="http://travis-ci.org">travis-ci</a> dashboard by
 			<a href="https://www.twitter.com/stackmagic">@</a><a href="http://github.com/stackmagic">stackmagic</a> | 
 			<a href="https://github.com/stackmagic/maven-repo#readme">README</a>
