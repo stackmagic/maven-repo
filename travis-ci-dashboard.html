@@ -38,6 +38,9 @@ Ideas for more:
 				color: #FFFFFF;
 				text-decoration: none;
 			}
+			a:hover {
+				text-decoration: underline;
+			}
 			#credit {
 				font-size: 0.5em;
 				text-align: right;
@@ -73,7 +76,7 @@ Ideas for more:
 			}
 		</style>
 		<script type="text/javascript">
-			// blatantly stolen from http://ejohn.org/files/pretty.js
+			// blatantly stolen from http://ejohn.org/files/pretty.js (MIT License)
 			function prettyDate(time){
 				var date = new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
 					diff = (((new Date()).getTime() - date.getTime()) / 1000),
@@ -104,7 +107,6 @@ Ideas for more:
 				while (result.childNodes.length > 0) {
 					result.removeChild(result.firstChild)
 				}
-				
 
 				// add failed builds first
 				for (i = 0; i < json.length; i++) {
@@ -194,7 +196,11 @@ Ideas for more:
 		</script>
 	</head>
 	<body id="body" onload="init()" onhashchange="update()">
-		<div id="credit">travis-ci dashboard by <a href="http://github.com/stackmagic">stackmagic</a> | <a href="https://github.com/stackmagic/maven-repo#readme">README</a></div>
+		<div id="credit">
+			<a href="http://travis-ci.org">travis-ci</a> dashboard by
+			<a href="https://www.twitter.com/stackmagic">@</a><a href="http://github.com/stackmagic">stackmagic</a> | 
+			<a href="https://github.com/stackmagic/maven-repo#readme">README</a>
+		</div>
 		<div id="result">Loading...</div>
 	</body>
 </html>
