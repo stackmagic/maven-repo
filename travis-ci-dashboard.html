@@ -19,7 +19,7 @@ Ideas for more:
 * show an extra line at the bottom of the panel with a history of past builds, just the number and an icon or red/green color => http://travis-ci.org/:owner_name/:name/builds.json
 * read the username from the url (param or maybe domain name)
 * display in progress builds with a spinner icon and grey background for the panel
-* order panels: failed on top, the build in progress then ok -- each group sorted by newest on top
+* order panels: failed on top, the build in progress then ok - each group sorted by newest on top
 * make it completely self-contained, load once, let it run forever
 * back/fwd buttons to navigate between builds, button to reset - kinda duplicates the past builds history
 -->
@@ -40,6 +40,11 @@ Ideas for more:
 			}
 			a:hover {
 				text-decoration: underline;
+			}
+			img {
+				margin-top: 0.25em;
+				margin-right: 0.25em;
+				vertical-align: center;
 			}
 			#credit {
 				font-size: 0.5em;
@@ -135,6 +140,9 @@ Ideas for more:
 				repoName = document.createElement("div")
 				repoNameLink = document.createElement("a")
 				repoNameLink.setAttribute("href", "http://travis-ci.org/" + json.slug)
+				repoNameLinkIco = document.createElement("img")
+				repoNameLinkIco.setAttribute("src", "http://travis-ci.org/favicon.ico");
+				repoNameLink.appendChild(repoNameLinkIco)
 				repoNameLink.appendChild(document.createTextNode(json.slug))
 				repoName.appendChild(repoNameLink)
 				panel.appendChild(repoName)
@@ -149,6 +157,9 @@ Ideas for more:
 				repoDesc = document.createElement("div")
 				repoDescLink = document.createElement("a")
 				repoDescLink.setAttribute("href", "https://github.com/" + json.slug)
+				repoDescLinkIco = document.createElement("img")
+				repoDescLinkIco.setAttribute("src", "https://github.com/favicon.ico")
+				repoDescLink.appendChild(repoDescLinkIco)
 				repoDescLink.appendChild(document.createTextNode(json.description))
 				repoDesc.appendChild(repoDescLink)
 				panel.appendChild(repoDesc)
