@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
 Copyright (c) Patrick Huber / stackmagic@gmail.com
@@ -14,20 +15,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<!--
-Ideas for more:
-* show an extra line at the bottom of the panel with a history of past builds, just the number and an icon or red/green color => http://travis-ci.org/:owner_name/:name/builds.json
-* read the username from the url (param or maybe domain name)
-* display in progress builds with a spinner icon and grey background for the panel
-* order panels: failed on top, the build in progress then ok - each group sorted by newest on top
-* make it completely self-contained, load once, let it run forever
-* back/fwd buttons to navigate between builds, button to reset - kinda duplicates the past builds history
-* use http://travis-ci.org/workers.json to check if one of my projects is currently pending a build
-* support a comma separated list of usernames as in #stackmagic,twitter and display a single list containing all projects of all users
-* update all the timestamp in the ui the same as the last update ts on top
--->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 	<head>
+		<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 		<title>Travis Dashboard</title>
 		<style>
 			body {
@@ -86,6 +76,18 @@ Ideas for more:
 				text-align: right;
 			}
 		</style>
+<!--
+Ideas for more:
+* show an extra line at the bottom of the panel with a history of past builds, just the number and an icon or red/green color => http://travis-ci.org/:owner_name/:name/builds.json
+* read the username from the url (param or maybe domain name)
+* display in progress builds with a spinner icon and grey background for the panel
+* order panels: failed on top, the build in progress then ok - each group sorted by newest on top
+* make it completely self-contained, load once, let it run forever
+* back/fwd buttons to navigate between builds, button to reset - kinda duplicates the past builds history
+* use http://travis-ci.org/workers.json to check if one of my projects is currently pending a build
+* support a comma separated list of usernames as in #stackmagic,twitter and display a single list containing all projects of all users
+* update all the timestamp in the ui the same as the last update ts on top
+-->
 		<script type="text/javascript" src="https://raw.github.com/zachleat/Humane-Dates/1b557e21c8ec0a8889af0f78d1ee1eba33a2a259/humane.js"></script>
 		<script type="text/javascript">
 			// read the response and update the dashboard
@@ -128,7 +130,7 @@ Ideas for more:
 				else {
 					panel.setAttribute("class", "fail")
 				}
-	
+
 				repoName = document.createElement("div")
 				repoNameLink = document.createElement("a")
 				repoNameLink.setAttribute("href", "http://travis-ci.org/" + json.slug)
@@ -165,12 +167,15 @@ Ideas for more:
 
 			// update the dashboard
 			function update() {
+
+				// use myself as default user
 				user = "stackmagic"
 
-				// try to get username from subdomain
-				loc = window.location.host
-				if (loc.split(".").length > 0 && loc.indexOf("localhost") < 0 && loc.indexOf("127.0.0") < 0) {
-					user = loc.split(".")[0]
+				// try to get travis username from github subdomain
+				loc = window.location.hostname
+				if (loc.length > 0 && loc.split(".").length > 0 && loc.indexOf("localhost") < 0 && loc.indexOf("127.0.0") < 0) {
+					user = loc
+					console.log("Got user from subdomain => " + user)
 				}
 
 				// try to get username from anchor in url
@@ -179,16 +184,22 @@ Ideas for more:
 					newUser = loc.split("#")[1]
 					if (newUser.length > 0) {
 						user = newUser
+						console.log("Got user from hash => " + user)
 					}
 				}
 
+				// cleanup old script calls
 				while (document.body.getElementsByTagName("script").length > 0) {
 					document.body.removeChild(document.body.getElementsByTagName("script")[0])
 				}
 
+				// call travis via jsonp
+				travisUrl = "http://travis-ci.org/repositories.json?owner_name=" + user + "&amp;callback=parseResponse";
+				console.log("CALLING: " + travisUrl);
+
 				script = document.createElement("script")
 				script.setAttribute("type", "text/javascript")
-				script.setAttribute("src", "http://travis-ci.org/repositories.json?owner_name=" + user + "&amp;callback=parseResponse")
+				script.setAttribute("src", travisUrl)
 				document.body.appendChild(script)
 			}
 
