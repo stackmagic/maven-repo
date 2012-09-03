@@ -174,7 +174,7 @@ Ideas for more:
 				// try to get travis username from github subdomain
 				loc = window.location.hostname
 				if (loc.length > 0 && loc.split(".").length > 0 && loc.indexOf("localhost") < 0 && loc.indexOf("127.0.0") < 0) {
-					user = loc
+					user = loc.split(".")[0];
 					console.log("Got user from subdomain => " + user)
 				}
 

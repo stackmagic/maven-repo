@@ -5,7 +5,7 @@ p. not much to see here on the master branch, check out the gh-pages branch or t
 
 bc..  <repository>
     <id>stackmagic.github.maven-repo</id>
-    <url>http://stackmagic.github.com/maven-repo/</url>
+    <url>http://stackmagic.github.com/maven-repo/maven2</url>
 </repository> 
 
 h1. stackmagic's travic-ci dashboard
