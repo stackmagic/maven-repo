@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.corundumstudio.socketio</groupId>
+  <artifactId>netty-socketio</artifactId>
+  <versioning>
+    <release>1.0.0.stackmagic</release>
+    <versions>
+      <version>1.0.0.stackmagic</version>
+    </versions>
+    <lastUpdated>20130531101756</lastUpdated>
+  </versioning>
+</metadata>
