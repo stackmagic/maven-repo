@@ -78,7 +78,7 @@ limitations under the License.
 		</style>
 <!--
 Ideas for more:
-* show an extra line at the bottom of the panel with a history of past builds, just the number and an icon or red/green color => http://travis-ci.org/:owner_name/:name/builds.json
+* show an extra line at the bottom of the panel with a history of past builds, just the number and an icon or red/green color => http://api.travis-ci.org/:owner_name/:name/builds.json
 * read the username from the url (param or maybe domain name)
 * display in progress builds with a spinner icon and grey background for the panel
 * order panels: failed on top, the build in progress then ok - each group sorted by newest on top
@@ -334,7 +334,7 @@ if(typeof jQuery != 'undefined') {
 				}
 
 				// call travis via jsonp
-				travisUrl = "http://travis-ci.org/repositories.json?owner_name=" + user + "&amp;callback=parseResponse";
+				travisUrl = "http://api.travis-ci.org/repositories.json?owner_name=" + user + "&amp;callback=parseResponse";
 				console.log("CALLING: " + travisUrl);
 
 				script = document.createElement("script")
