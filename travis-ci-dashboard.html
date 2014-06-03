@@ -273,9 +273,9 @@ if(typeof jQuery != 'undefined') {
 
 				repoName = document.createElement("div")
 				repoNameLink = document.createElement("a")
-				repoNameLink.setAttribute("href", "http://travis-ci.org/" + json.slug)
+				repoNameLink.setAttribute("href", "https://travis-ci.org/" + json.slug)
 				repoNameLinkIco = document.createElement("img")
-				repoNameLinkIco.setAttribute("src", "http://travis-ci.org/favicon.ico");
+				repoNameLinkIco.setAttribute("src", "https://travis-ci.org/favicon.ico");
 				repoNameLink.appendChild(repoNameLinkIco)
 				repoNameLink.appendChild(document.createTextNode(json.slug))
 				repoName.appendChild(repoNameLink)
@@ -283,7 +283,7 @@ if(typeof jQuery != 'undefined') {
 
 				buildId = document.createElement("div")
 				buildIdLink = document.createElement("a")
-				buildIdLink.setAttribute("href", "http://travis-ci.org/" + json.slug + "/builds/" + json.last_build_id)
+				buildIdLink.setAttribute("href", "https://travis-ci.org/" + json.slug + "/builds/" + json.last_build_id)
 				buildIdLink.appendChild(document.createTextNode("#" + json.last_build_number))
 				buildId.appendChild(buildIdLink)
 				panel.appendChild(buildId)
@@ -334,7 +334,7 @@ if(typeof jQuery != 'undefined') {
 				}
 
 				// call travis via jsonp
-				travisUrl = "http://api.travis-ci.org/repositories.json?owner_name=" + user + "&amp;callback=parseResponse";
+				travisUrl = "https://api.travis-ci.org/repositories.json?owner_name=" + user + "&amp;callback=parseResponse";
 				console.log("CALLING: " + travisUrl);
 
 				script = document.createElement("script")
@@ -358,8 +358,8 @@ if(typeof jQuery != 'undefined') {
 	<body id="body" onload="init()" onhashchange="update()">
 		<div id="credit">
 			<a href="javascript:update()">update now</a> (last updated: <span id="lastUpdated">never</span>) |
-			<a href="http://travis-ci.org">travis-ci</a> dashboard by
-			<a href="https://www.twitter.com/stackmagic">@</a><a href="http://github.com/stackmagic">stackmagic</a> |
+			<a href="https://travis-ci.org">travis-ci</a> dashboard by
+			<a href="https://www.twitter.com/stackmagic">@</a><a href="https://github.com/stackmagic">stackmagic</a> |
 			<a href="https://github.com/stackmagic/maven-repo#readme">README</a>
 		</div>
 		<div id="result">Loading...</div>
